@@ -730,6 +730,7 @@
             .cta {
                 padding: 6px 14px;
                 font-size: 12px;
+                white-space: nowrap;
             }
 
             .hero {
@@ -1110,7 +1111,7 @@
             }
 
             getWeather();
-            setInterval(getWeather, 600000); // Update every 10 minutes
+            setInterval(getWeather, 60000); // Update every 10 minutes
             // Create floating particles
             const particlesContainer = document.getElementById("particles");
             const particleCount = 1200;
