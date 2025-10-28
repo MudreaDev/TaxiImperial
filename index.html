@@ -1,977 +1,1048 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0a0a0a" />
-  <title>Taxi Imperial — Lux & Business Class</title>
-  
-  <!-- AOS Animation Library -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-  
-  <!-- Google Fonts - SF Pro Display Alternative -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --bg: #000000;
-      --text: #f5f5f7;
-      --text-secondary: #86868b;
-      --gold: #d4af37;
-      --gold-light: #e8c968;
-      --surface: #1d1d1f;
-      --surface-light: #2d2d2f;
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    html {
-      scroll-behavior: smooth;
-    }
-    
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-    }
-    
-    .container { 
-      max-width: 1200px; 
-      margin: 0 auto; 
-      padding: 0 24px; 
-    }
-    
-    /* Header */
-    .header {
-      position: fixed; 
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0,0,0,0.72);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      padding: 0;
-      z-index: 1000;
-      transition: background 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
-      border-bottom: 0.5px solid rgba(255,255,255,0.08);
-    }
-    
-    .header.scrolled {
-      background: rgba(0,0,0,0.85);
-    }
-    
-    .nav-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 48px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text);
-    }
-    
-    .logo {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      color: #000;
-      font-size: 14px;
-      letter-spacing: -0.5px;
-    }
-    
-    .brand-name {
-      font-size: 21px;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-    }
-    
-    nav ul {
-      list-style: none; 
-      display: flex; 
-      gap: 40px;
-      margin: 0;
-    }
-    
-    nav a { 
-      color: var(--text); 
-      text-decoration: none;
-      transition: opacity 0.3s ease;
-      font-weight: 400;
-      font-size: 14px;
-      opacity: 0.92;
-    }
-    
-    nav a:hover {
-      opacity: 1;
-    }
-    
-    .cta {
-      background: var(--gold);
-      color: #000;
-      padding: 8px 20px;
-      border-radius: 980px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 14px;
-      transition: all 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
-      display: inline-block;
-    }
-    
-    .cta:hover {
-      transform: scale(1.02);
-      background: var(--gold-light);
-    }
-    
-    .cta-primary {
-      background: var(--gold);
-      color: #000;
-      padding: 14px 32px;
-      font-size: 17px;
-      font-weight: 500;
-    }
-    
-    .cta-secondary {
-      background: transparent;
-      color: var(--gold);
-      border: 1.5px solid var(--gold);
-      padding: 14px 32px;
-      font-size: 17px;
-      font-weight: 500;
-    }
-    
-    .cta-secondary:hover {
-      background: var(--gold);
-      color: #000;
-    }
-    
-    /* Hero Section */
-    .hero {
-      height: 100vh;
-      min-height: 600px;
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      padding-top: 48px;
-    }
-    
-    .hero-bg {
-      position: absolute; 
-      inset: 0;
-      background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
-      z-index: 0;
-    }
-    
-    .hero-bg::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: 
-        radial-gradient(ellipse at 20% 30%, rgba(212,175,55,0.18) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 70%, rgba(212,175,55,0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(212,175,55,0.1) 0%, transparent 60%),
-        radial-gradient(circle at 30% 80%, rgba(212,175,55,0.12) 0%, transparent 45%);
-      animation: pulseGlow 8s ease-in-out infinite;
-    }
-    
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
-    
-    .hero-particles {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      z-index: 1;
-    }
-    
-    .particle {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: var(--gold);
-      border-radius: 50%;
-      opacity: 0;
-      animation: float 20s infinite ease-in-out;
-      will-change: transform, opacity;
-    }
-    
-    @keyframes float {
-      0% { 
-        transform: translateY(100vh) translateX(0) scale(0.5); 
-        opacity: 0; 
-      }
-      5% { 
-        opacity: 0.6; 
-      }
-      10% { 
-        opacity: 0.4; 
-      }
-      85% { 
-        opacity: 0.4; 
-      }
-      90% { 
-        opacity: 0.6; 
-      }
-      100% { 
-        transform: translateY(-100vh) translateX(100px) scale(1); 
-        opacity: 0; 
-      }
-    }
-    
-    .hero-content { 
-      position: relative; 
-      z-index: 2;
-      max-width: 980px;
-      padding: 0 24px;
-    }
-    
-    .hero-title { 
-      font-size: clamp(48px, 8vw, 96px); 
-      margin: 0 0 24px;
-      font-weight: 700;
-      letter-spacing: -3px;
-      line-height: 1.05;
-      background: linear-gradient(180deg, #ffffff 0%, #a0a0a0 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .hero-subtitle { 
-      font-size: clamp(21px, 3vw, 28px); 
-      margin: 0 0 48px;
-      font-weight: 400;
-      color: var(--text-secondary);
-      letter-spacing: -0.5px;
-    }
-    
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 60px;
-    }
-    
-    /* Features Section */
-    .features-section {
-      padding: 120px 0;
-      background: var(--bg);
-      position: relative;
-    }
-    
-    .section-title {
-      font-size: clamp(40px, 6vw, 64px);
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 80px;
-      letter-spacing: -2px;
-      line-height: 1.1;
-    }
-    
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .feature-card {
-      background: var(--surface);
-      border-radius: 28px;
-      padding: 48px 36px;
-      transition: all 0.5s cubic-bezier(0.28, 0.11, 0.32, 1);
-      border: 1px solid rgba(255,255,255,0.06);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 0%, rgba(212,175,55,0.1) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-    
-    .feature-card:hover::before {
-      opacity: 1;
-    }
-    
-    .feature-card:hover {
-      transform: translateY(-12px);
-      border-color: rgba(212,175,55,0.3);
-      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-    }
-    
-    .feature-icon {
-      font-size: 56px;
-      margin-bottom: 24px;
-      display: block;
-    }
-    
-    .feature-title {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      letter-spacing: -0.5px;
-    }
-    
-    .feature-description {
-      font-size: 17px;
-      line-height: 1.5;
-      color: var(--text-secondary);
-      font-weight: 400;
-    }
-    
-    /* Services Grid */
-    .services-section {
-      padding: 120px 0;
-      background: var(--bg);
-    }
-    
-    .services-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 32px;
-      margin-top: 80px;
-    }
-    
-    .service-card {
-      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
-      border-radius: 24px;
-      padding: 64px 40px;
-      text-align: center;
-      transition: all 0.6s cubic-bezier(0.28, 0.11, 0.32, 1);
-      border: 1px solid rgba(255,255,255,0.08);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .service-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(212,175,55,0.15) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.6s ease;
-    }
-    
-    .service-card:hover::after {
-      opacity: 1;
-    }
-    
-    .service-card:hover {
-      transform: translateY(-16px) scale(1.02);
-      box-shadow: 0 50px 100px rgba(212,175,55,0.2);
-    }
-    
-    .service-emoji {
-      font-size: 72px;
-      margin-bottom: 24px;
-      display: block;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
-    }
-    
-    .service-name {
-      font-size: 22px;
-      font-weight: 600;
-      position: relative;
-      z-index: 1;
-      letter-spacing: -0.5px;
-    }
-    
-    /* About Section */
-    .about-section {
-      padding: 140px 0;
-      background: var(--surface);
-      text-align: center;
-    }
-    
-    .about-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    
-    .about-content h2 {
-      font-size: clamp(40px, 6vw, 64px);
-      font-weight: 700;
-      margin-bottom: 32px;
-      letter-spacing: -2px;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .about-content p {
-      font-size: 21px;
-      line-height: 1.6;
-      color: var(--text-secondary);
-      font-weight: 400;
-      margin-bottom: 24px;
-    }
-    
-    /* Contact Section */
-    .contact-section {
-      padding: 140px 0;
-      background: var(--bg);
-      text-align: center;
-    }
-    
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
-      max-width: 1000px;
-      margin: 60px auto 0;
-    }
-    
-    .contact-card {
-      background: var(--surface);
-      border-radius: 24px;
-      padding: 48px 32px;
-      border: 1px solid rgba(255,255,255,0.06);
-      transition: all 0.4s ease;
-    }
-    
-    .contact-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(212,175,55,0.3);
-    }
-    
-    .contact-icon {
-      font-size: 40px;
-      margin-bottom: 16px;
-    }
-    
-    .contact-label {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 600;
-    }
-    
-    .contact-value {
-      font-size: 19px;
-      font-weight: 500;
-    }
-    
-    .contact-value a {
-      color: var(--gold);
-      text-decoration: none;
-      transition: opacity 0.3s ease;
-    }
-    
-    .contact-value a:hover {
-      opacity: 0.8;
-    }
-    
-    /* Footer */
-    .footer { 
-      text-align: center; 
-      padding: 48px 24px; 
-      background: var(--surface);
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    
-    .footer p {
-      margin: 0;
-      color: var(--text-secondary);
-      font-size: 14px;
-      font-weight: 400;
-    }
-    
-    /* Scroll Indicator */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 24px;
-      height: 40px;
-      border-radius: 12px;
-      border: 2px solid rgba(212,175,55,0.4);
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 8px;
-      z-index: 2;
-    }
-    
-    .scroll-indicator span {
-      display: block;
-      width: 3px;
-      height: 10px;
-      background: var(--gold);
-      border-radius: 2px;
-      animation: scrollBounce 2s ease-in-out infinite;
-    }
-    
-    @keyframes scrollBounce {
-      0%, 100% { transform: translateY(0); opacity: 1; }
-      50% { transform: translateY(12px); opacity: 0.3; }
-    }
-    
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .container {
-        padding: 0 20px;
-      }
-      
-      .nav-container {
-        padding: 0 20px;
-      }
-      
-      nav ul {
-        gap: 24px;
-      }
-      
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-      }
-      
-      .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-      }
-      
-      .contact-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    
-    @media (max-width: 768px) {
-      .nav-container {
-        height: 44px;
-      }
-      
-      .nav-container nav {
-        display: none;
-      }
-      
-      .brand-name {
-        font-size: 18px;
-      }
-      
-      .logo {
-        width: 28px;
-        height: 28px;
-        font-size: 12px;
-      }
-      
-      .cta {
-        padding: 7px 16px;
-        font-size: 13px;
-      }
-      
-      .hero {
-        height: 100vh;
-        min-height: 600px;
-      }
-      
-      .hero-title {
-        letter-spacing: -1.5px;
-        font-size: clamp(40px, 10vw, 64px);
-      }
-      
-      .hero-subtitle {
-        font-size: clamp(18px, 4vw, 24px);
-        margin-bottom: 36px;
-      }
-      
-      .hero-actions {
-        flex-direction: column;
-        width: 100%;
-        max-width: 320px;
-        margin: 0 auto 60px;
-      }
-      
-      .cta-primary,
-      .cta-secondary {
-        width: 100%;
-        text-align: center;
-      }
-      
-      .features-grid,
-      .services-grid,
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .features-section,
-      .services-section,
-      .about-section,
-      .contact-section {
-        padding: 80px 0;
-      }
-      
-      .section-title {
-        letter-spacing: -1px;
-        font-size: clamp(32px, 8vw, 48px);
-        margin-bottom: 48px;
-      }
-      
-      .feature-card {
-        padding: 40px 28px;
-      }
-      
-      .feature-icon {
-        font-size: 48px;
-        margin-bottom: 20px;
-      }
-      
-      .feature-title {
-        font-size: 21px;
-      }
-      
-      .feature-description {
-        font-size: 16px;
-      }
-      
-      .service-card {
-        padding: 48px 32px;
-      }
-      
-      .service-emoji {
-        font-size: 64px;
-        margin-bottom: 20px;
-      }
-      
-      .service-name {
-        font-size: 19px;
-      }
-      
-      .about-content h2 {
-        font-size: clamp(32px, 8vw, 48px);
-      }
-      
-      .about-content p {
-        font-size: 18px;
-      }
-      
-      .contact-card {
-        padding: 36px 24px;
-      }
-      
-      .scroll-indicator {
-        bottom: 24px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .container {
-        padding: 0 16px;
-      }
-      
-      .nav-container {
-        padding: 0 16px;
-      }
-      
-      .hero-title {
-        font-size: clamp(36px, 12vw, 48px);
-        letter-spacing: -1px;
-      }
-      
-      .hero-subtitle {
-        font-size: 17px;
-      }
-      
-      .cta-primary,
-      .cta-secondary {
-        padding: 12px 28px;
-        font-size: 16px;
-      }
-      
-      .section-title {
-        font-size: clamp(28px, 10vw, 40px);
-        margin-bottom: 40px;
-      }
-      
-      .feature-card {
-        padding: 32px 24px;
-      }
-      
-      .service-card {
-        padding: 40px 24px;
-      }
-      
-      .service-emoji {
-        font-size: 56px;
-      }
-      
-      .about-content p {
-        font-size: 17px;
-      }
-      
-      .contact-icon {
-        font-size: 36px;
-      }
-      
-      .contact-value {
-        font-size: 17px;
-      }
-    }
-    
-    @media (max-width: 360px) {
-      .hero-title {
-        font-size: 32px;
-      }
-      
-      .hero-subtitle {
-        font-size: 16px;
-      }
-      
-      .section-title {
-        font-size: 26px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <title>Taxi Imperial — Lux & Business Class</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4af37;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23e8c968;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23grad)'/%3E%3Ctext x='50' y='70' font-family='Arial' font-size='50' font-weight='bold' fill='%23000' text-anchor='middle'%3ETI%3C/text%3E%3C/svg%3E">
+
+    <!-- AOS Animation Library -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <!-- Google Fonts - SF Pro Display Alternative -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #000000;
+            --text: #f5f5f7;
+            --text-secondary: #86868b;
+            --gold: #d4af37;
+            --gold-light: #e8c968;
+            --surface: #1d1d1f;
+            --surface-light: #2d2d2f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            padding: 0;
+            z-index: 1000;
+            transition: background 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
+            border-bottom: 0.5px solid rgba(255,255,255,0.08);
+        }
+
+            .header.scrolled {
+                background: rgba(0,0,0,0.85);
+            }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #000;
+            font-size: 14px;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-name {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+            margin: 0;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            font-weight: 400;
+            font-size: 14px;
+            opacity: 0.92;
+        }
+
+            nav a:hover {
+                opacity: 1;
+            }
+
+        .weather-widget {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(212,175,55,0.12);
+            border-radius: 980px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 0.5px solid rgba(212,175,55,0.2);
+        }
+
+        .weather-icon {
+            font-size: 16px;
+        }
+
+        .cta {
+            background: var(--gold);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 980px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
+            display: inline-block;
+        }
+
+            .cta:hover {
+                transform: scale(1.02);
+                background: var(--gold-light);
+            }
+
+        .cta-primary {
+            background: var(--gold);
+            color: #000;
+            padding: 14px 32px;
+            font-size: 17px;
+            font-weight: 500;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--gold);
+            border: 1.5px solid var(--gold);
+            padding: 14px 32px;
+            font-size: 17px;
+            font-weight: 500;
+        }
+
+            .cta-secondary:hover {
+                background: var(--gold);
+                color: #000;
+            }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 48px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
+            z-index: 0;
+        }
+
+            .hero-bg::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(ellipse at 20% 30%, rgba(212,175,55,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(212,175,55,0.15) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(212,175,55,0.1) 0%, transparent 60%), radial-gradient(circle at 30% 80%, rgba(212,175,55,0.12) 0%, transparent 45%);
+                animation: pulseGlow 8s ease-in-out infinite;
+            }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 1;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 20s infinite ease-in-out;
+            will-change: transform, opacity;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0.5);
+                opacity: 0;
+            }
+
+            5% {
+                opacity: 0.6;
+            }
+
+            10% {
+                opacity: 0.4;
+            }
+
+            85% {
+                opacity: 0.4;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-100vh) translateX(100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 980px;
+            padding: 0 24px;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 96px);
+            margin: 0 0 24px;
+            font-weight: 700;
+            letter-spacing: -3px;
+            line-height: 1.05;
+            background: linear-gradient(180deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(21px, 3vw, 28px);
+            margin: 0 0 48px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: -0.5px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 120px 0;
+            background: var(--bg);
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border-radius: 28px;
+            padding: 48px 36px;
+            transition: all 0.5s cubic-bezier(0.28, 0.11, 0.32, 1);
+            border: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .feature-card::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle at 50% 0%, rgba(212,175,55,0.1) 0%, transparent 70%);
+                opacity: 0;
+                transition: opacity 0.5s ease;
+            }
+
+            .feature-card:hover::before {
+                opacity: 1;
+            }
+
+            .feature-card:hover {
+                transform: translateY(-12px);
+                border-color: rgba(212,175,55,0.3);
+                box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            }
+
+        .feature-icon {
+            font-size: 56px;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .feature-description {
+            font-size: 17px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Services Grid */
+        .services-section {
+            padding: 120px 0;
+            background: var(--bg);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 80px;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+            border-radius: 24px;
+            padding: 64px 40px;
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.28, 0.11, 0.32, 1);
+            border: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .service-card::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle at 50% 50%, rgba(212,175,55,0.15) 0%, transparent 70%);
+                opacity: 0;
+                transition: opacity 0.6s ease;
+            }
+
+            .service-card:hover::after {
+                opacity: 1;
+            }
+
+            .service-card:hover {
+                transform: translateY(-16px) scale(1.02);
+                box-shadow: 0 50px 100px rgba(212,175,55,0.2);
+            }
+
+        .service-emoji {
+            font-size: 72px;
+            margin-bottom: 24px;
+            display: block;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        .service-name {
+            font-size: 22px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .service-description {
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 140px 0;
+            background: var(--surface);
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+            .about-content h2 {
+                font-size: clamp(40px, 6vw, 64px);
+                font-weight: 700;
+                margin-bottom: 32px;
+                letter-spacing: -2px;
+                background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .about-content p {
+                font-size: 21px;
+                line-height: 1.6;
+                color: var(--text-secondary);
+                font-weight: 400;
+                margin-bottom: 24px;
+            }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 140px 0;
+            background: var(--bg);
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            max-width: 1000px;
+            margin: 60px auto 0;
+        }
+
+        .contact-card {
+            background: var(--surface);
+            border-radius: 24px;
+            padding: 48px 32px;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.4s ease;
+        }
+
+            .contact-card:hover {
+                transform: translateY(-8px);
+                border-color: rgba(212,175,55,0.3);
+            }
+
+        .contact-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .contact-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .contact-value {
+            font-size: 19px;
+            font-weight: 500;
+        }
+
+            .contact-value a {
+                color: var(--gold);
+                text-decoration: none;
+                transition: opacity 0.3s ease;
+            }
+
+                .contact-value a:hover {
+                    opacity: 0.8;
+                }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 48px 24px;
+            background: var(--surface);
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+            .footer p {
+                margin: 0;
+                color: var(--text-secondary);
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 40px;
+            border-radius: 12px;
+            border: 2px solid rgba(212,175,55,0.4);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 8px;
+            z-index: 2;
+        }
+
+            .scroll-indicator span {
+                display: block;
+                width: 3px;
+                height: 10px;
+                background: var(--gold);
+                border-radius: 2px;
+                animation: scrollBounce 2s ease-in-out infinite;
+            }
+
+        @keyframes scrollBounce {
+            0%, 100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(12px);
+                opacity: 0.3;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .nav-container {
+                padding: 0 20px;
+            }
+
+            nav ul {
+                gap: 24px;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                height: 44px;
+            }
+
+                .nav-container nav {
+                    display: none;
+                }
+
+            .brand-name {
+                font-size: 18px;
+            }
+
+            .logo {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .cta {
+                padding: 7px 16px;
+                font-size: 13px;
+            }
+
+            .hero {
+                height: 100vh;
+                min-height: 600px;
+            }
+
+            .hero-title {
+                letter-spacing: -1.5px;
+                font-size: clamp(40px, 10vw, 64px);
+            }
+
+            .hero-subtitle {
+                font-size: clamp(18px, 4vw, 24px);
+                margin-bottom: 36px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+                max-width: 320px;
+                margin: 0 auto 60px;
+            }
+
+            .cta-primary,
+            .cta-secondary {
+                width: 100%;
+                text-align: center;
+            }
+
+            .features-grid,
+            .services-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-section,
+            .services-section,
+            .about-section,
+            .contact-section {
+                padding: 80px 0;
+            }
+
+            .section-title {
+                letter-spacing: -1px;
+                font-size: clamp(32px, 8vw, 48px);
+                margin-bottom: 48px;
+            }
+
+            .feature-card {
+                padding: 40px 28px;
+            }
+
+            .feature-icon {
+                font-size: 48px;
+                margin-bottom: 20px;
+            }
+
+            .feature-title {
+                font-size: 21px;
+            }
+
+            .feature-description {
+                font-size: 16px;
+            }
+
+            .service-card {
+                padding: 48px 32px;
+            }
+
+            .service-emoji {
+                font-size: 64px;
+                margin-bottom: 20px;
+            }
+
+            .service-name {
+                font-size: 19px;
+            }
+
+            .about-content h2 {
+                font-size: clamp(32px, 8vw, 48px);
+            }
+
+            .about-content p {
+                font-size: 18px;
+            }
+
+            .contact-card {
+                padding: 36px 24px;
+            }
+
+            .scroll-indicator {
+                bottom: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .nav-container {
+                padding: 0 16px;
+            }
+
+            .hero-title {
+                font-size: clamp(36px, 12vw, 48px);
+                letter-spacing: -1px;
+            }
+
+            .hero-subtitle {
+                font-size: 17px;
+            }
+
+            .cta-primary,
+            .cta-secondary {
+                padding: 12px 28px;
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: clamp(28px, 10vw, 40px);
+                margin-bottom: 40px;
+            }
+
+            .feature-card {
+                padding: 32px 24px;
+            }
+
+            .service-card {
+                padding: 40px 24px;
+            }
+
+            .service-emoji {
+                font-size: 56px;
+            }
+
+            .about-content p {
+                font-size: 17px;
+            }
+
+            .contact-icon {
+                font-size: 36px;
+            }
+
+            .contact-value {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 26px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header class="header" id="header">
-    <div class="nav-container">
-      <a class="brand" href="#home">
-        <div class="logo">TI</div>
-        <span class="brand-name">Taxi Imperial</span>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="#home">Acasă</a></li>
-          <li><a href="#about">Despre</a></li>
-          <li><a href="#services">Servicii</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-      <a class="cta" href="tel:+37360000000">Comandă acum</a>
-    </div>
-  </header>
-  
-  <main>
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-particles" id="particles"></div>
-      <div class="hero-content">
-        <h1 class="hero-title" data-aos="fade-up" data-aos-duration="1000">Lux. Discreție. Precizie.</h1>
-        <p class="hero-subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Taxi Imperial — standardul Business Class în Chișinău.</p>
-        <div class="hero-actions" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-          <a href="tel:+37360000000" class="cta cta-primary">Comandă acum</a>
-          <a href="#services" class="cta cta-secondary">Vezi servicii</a>
+    <header class="header" id="header">
+        <div class="nav-container">
+            <a class="brand" href="#home">
+                <div class="logo">TI</div>
+                <span class="brand-name">Taxi Imperial</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Acasă</a></li>
+                    <li><a href="#services">Servicii</a></li>
+                    <li><a href="#about">Despre</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li>
+                        <div class="weather-widget" id="weather">
+                            <span class="weather-icon">⏳</span>
+                            <span id="temp">...</span>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <a class="cta" href="tel:+37323577777">Comandă acum</a>
         </div>
-      </div>
-      <div class="scroll-indicator"><span></span></div>
-    </section>
+    </header>
 
-    <!-- Features Section -->
-    <section class="features-section">
-      <div class="container">
-        <h2 class="section-title" data-aos="fade-up">De ce Taxi Imperial?</h2>
-        <div class="features-grid">
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
-            <span class="feature-icon">⚡</span>
-            <h3 class="feature-title">Rapiditate</h3>
-            <p class="feature-description">Ajungem în 5 minute. Comandă acum și ne vedem imediat.</p>
-          </div>
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-            <span class="feature-icon">🛡️</span>
-            <h3 class="feature-title">Siguranță</h3>
-            <p class="feature-description">Șoferi verificați, mașini în condiție perfectă, traseu sigur.</p>
-          </div>
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-            <span class="feature-icon">💎</span>
-            <h3 class="feature-title">Lux Premium</h3>
-            <p class="feature-description">Vehicule business class cu interioare impecabile.</p>
-          </div>
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-            <span class="feature-icon">🤝</span>
-            <h3 class="feature-title">Profesionalism</h3>
-            <p class="feature-description">Echipă dedicată, disponibilă 24/7 pentru confortul tău.</p>
-          </div>
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-particles" id="particles"></div>
+            <div class="hero-content">
+                <h1 class="hero-title" data-aos="fade-up" data-aos-duration="1000">Lux. Discreție. Precizie.</h1>
+                <p class="hero-subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Taxi Imperial — standardul Business Class în Orhei.</p>
+                <div class="hero-actions" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                    <a href="tel:+37323577777" class="cta cta-primary">Comandă acum</a>
+                    <a href="#services" class="cta cta-secondary">Vezi servicii</a>
+                </div>
+            </div>
+            <div class="scroll-indicator"><span></span></div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">De ce Taxi Imperial?</h2>
+                <div class="features-grid">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                        <span class="feature-icon">⚡</span>
+                        <h3 class="feature-title">Rapiditate</h3>
+                        <p class="feature-description">Ajungem în 5 minute. Comandă acum și ne vedem imediat.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                        <span class="feature-icon">🛡️</span>
+                        <h3 class="feature-title">Siguranță</h3>
+                        <p class="feature-description">Șoferi verificați, mașini în condiție perfectă, traseu sigur.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                        <span class="feature-icon">🤝</span>
+                        <h3 class="feature-title">Profesionalism</h3>
+                        <p class="feature-description">Echipă dedicată, disponibilă 24/7 pentru confortul tău.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services-section">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Serviciile noastre</h2>
+                <div class="services-grid">
+                    <div class="service-card" data-aos="zoom-in" data-aos-delay="0">
+                        <span class="service-emoji">🚕</span>
+                        <h3 class="service-name">Cursă locală</h3>
+                        <p class="service-description">Deplasări rapide în Orhei și împrejurimi. Preț fix, fără surprize.</p>
+                    </div>
+                    <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
+                        <span class="service-emoji">✈️</span>
+                        <h3 class="service-name">Transfer aeroport</h3>
+                        <p class="service-description">Transport confortabil spre și de la aeroport. Punctualitate garantată.</p>
+                    </div>
+                    <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+                        <span class="service-emoji">🎉</span>
+                        <h3 class="service-name">Evenimente speciale</h3>
+                        <p class="service-description">Transport organizat în prealabil pentru nunți, evenimente corporative și orice sărbătoare.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-content" data-aos="fade-up">
+                    <h2>Despre noi</h2>
+                    <p>Taxi Imperial înseamnă mai mult decât o simplă cursă — este alegerea celor care vor siguranță, punctualitate și confort la fiecare deplasare. Suntem disponibili non‑stop și gata să transformăm fiecare drum într-o experiență plăcută și fără griji. Alege calitatea, alege Taxi Imperial.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Contactează-ne</h2>
+                <div class="contact-grid">
+                    <div class="contact-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-label">Telefon</div>
+                        <div class="contact-value"><a href="tel:+37323577777">+373 235 77777</a></div>
+                    </div>
+                    <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="contact-icon">📘</div>
+                        <div class="contact-label">Facebook</div>
+                        <div class="contact-value"><a href="https://www.facebook.com/profile.php?id=61557220314543" target="_blank">Vizitează-ne</a></div>
+                    </div>
+                    <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-label">Adresă</div>
+                        <div class="contact-value">Mun. Orhei, Moldova</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="year"></span> Taxi Imperial. Toate drepturile rezervate.</p>
         </div>
-      </div>
-    </section>
+    </footer>
 
-    <!-- Services Section -->
-    <section id="services" class="services-section">
-      <div class="container">
-        <h2 class="section-title" data-aos="fade-up">Serviciile noastre</h2>
-        <div class="services-grid">
-          <div class="service-card" data-aos="zoom-in" data-aos-delay="0">
-            <span class="service-emoji">🚕</span>
-            <h3 class="service-name">Cursă locală</h3>
-          </div>
-          <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
-            <span class="service-emoji">✈️</span>
-            <h3 class="service-name">Transfer aeroport</h3>
-          </div>
-          <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
-            <span class="service-emoji">💼</span>
-            <h3 class="service-name">Business Class</h3>
-          </div>
-          <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
-            <span class="service-emoji">🎉</span>
-            <h3 class="service-name">Evenimente speciale</h3>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- AOS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 
-    <!-- About Section -->
-    <section id="about" class="about-section">
-      <div class="container">
-        <div class="about-content" data-aos="fade-up">
-          <h2>Despre noi</h2>
-          <p>Taxi Imperial oferă servicii premium de transport, cu flotă business class și șoferi profesioniști.</p>
-          <p>Ne dedicăm excelenței în fiecare cursă, oferind confort maxim, siguranță garantată și o experiență de lux memorabilă.</p>
-        </div>
-      </div>
-    </section>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out',
+            once: true,
+            offset: 100
+        });
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-      <div class="container">
-        <h2 class="section-title" data-aos="fade-up">Contactează-ne</h2>
-        <div class="contact-grid">
-          <div class="contact-card" data-aos="fade-up" data-aos-delay="0">
-            <div class="contact-icon">📞</div>
-            <div class="contact-label">Telefon</div>
-            <div class="contact-value"><a href="tel:+37360000000">+373 60 000 000</a></div>
-          </div>
-          <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
-            <div class="contact-icon">✉️</div>
-            <div class="contact-label">Email</div>
-            <div class="contact-value"><a href="mailto:contact@taxiimperial.md">contact@taxiimperial.md</a></div>
-          </div>
-          <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
-            <div class="contact-icon">📍</div>
-            <div class="contact-label">Adresă</div>
-            <div class="contact-value">Chișinău, Moldova</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+        // Set current year
+        document.getElementById("year").textContent = new Date().getFullYear();
 
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; <span id="year"></span> Taxi Imperial. Toate drepturile rezervate.</p>
-    </div>
-  </footer>
+        // Header scroll effect
+        const header = document.getElementById("header");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
 
-  <!-- AOS Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  
-  <script>
-    // Initialize AOS
-    AOS.init({
-      duration: 800,
-      easing: 'ease-out',
-      once: true,
-      offset: 100
-    });
-    
-    // Set current year
-    document.getElementById("year").textContent = new Date().getFullYear();
-    
-    // Header scroll effect
-    const header = document.getElementById("header");
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 50) {
-        header.classList.add("scrolled");
-      } else {
-        header.classList.remove("scrolled");
-      }
-    });
-    
-    // Create floating particles (1200 particles - 5x more smooth)
-    const particlesContainer = document.getElementById("particles");
-    const particleCount = 1200;
-    
-    for (let i = 0; i < particleCount; i++) {
-      const particle = document.createElement("div");
-      particle.className = "particle";
-      
-      // Random positioning
-      particle.style.left = Math.random() * 100 + "%";
-      
-      // Varied animation delays for smooth distribution
-      particle.style.animationDelay = (Math.random() * 25) + "s";
-      
-      // Varied durations for more organic movement
-      particle.style.animationDuration = (18 + Math.random() * 12) + "s";
-      
-      // Random sizes for depth effect
-      const size = 1 + Math.random() * 2;
-      particle.style.width = size + "px";
-      particle.style.height = size + "px";
-      
-      // Random opacity variations
-      particle.style.setProperty('--max-opacity', (0.2 + Math.random() * 0.4));
-      
-      particlesContainer.appendChild(particle);
-    }
-    
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener("click", function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute("href"));
-        if (target) {
-          const headerOffset = 48;
-          const elementPosition = target.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-          
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
-          });
+        // Weather API - OpenWeatherMap
+        async function getWeather() {
+            try {
+                const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Orhei,MD&units=metric&lang=ro&appid=da43a84ef527622ad1a99e988d25e4bb');
+                const data = await response.json();
+
+                const temp = Math.round(data.main.temp);
+                const weatherMain = data.weather[0].main.toLowerCase();
+
+                let weatherIcon = '☀️';
+                if (weatherMain.includes('cloud')) weatherIcon = '☁️';
+                else if (weatherMain.includes('rain')) weatherIcon = '🌧️';
+                else if (weatherMain.includes('snow')) weatherIcon = '❄️';
+                else if (weatherMain.includes('clear')) weatherIcon = '☀️';
+                else if (weatherMain.includes('mist') || weatherMain.includes('fog')) weatherIcon = '🌫️';
+
+                document.querySelector('.weather-icon').textContent = weatherIcon;
+                document.getElementById('temp').textContent = `${temp}°C`;
+            } catch (error) {
+                console.error('Eroare meteo:', error);
+                document.getElementById('temp').textContent = 'Orhei';
+            }
         }
-      });
-    });
-    
-    // Parallax effect for hero
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      const heroContent = document.querySelector('.hero-content');
-      if (heroContent && scrolled < window.innerHeight) {
-        heroContent.style.transform = `translateY(${scrolled * 0.4}px)`;
-        heroContent.style.opacity = 1 - (scrolled / window.innerHeight);
-      }
-    });
-  </script>
+
+        getWeather();
+        setInterval(getWeather, 600000); // actualizare la 10 minute
+
+        // Create floating particles (1200 particles - smooth)
+        const particlesContainer = document.getElementById("particles");
+        const particleCount = 1200;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement("div");
+            particle.className = "particle";
+
+            // Random positioning
+            particle.style.left = Math.random() * 100 + "%";
+
+            // Varied animation delays for smooth distribution
+            particle.style.animationDelay = (Math.random() * 25) + "s";
+
+            // Varied durations for more organic movement
+            particle.style.animationDuration = (18 + Math.random() * 12) + "s";
+
+            // Random sizes for depth effect
+            const size = 1 + Math.random() * 2;
+            particle.style.width = size + "px";
+            particle.style.height = size + "px";
+
+            // Random opacity variations
+            particle.style.setProperty('--max-opacity', (0.2 + Math.random() * 0.4));
+
+            particlesContainer.appendChild(particle);
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener("click", function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute("href"));
+                if (target) {
+                    const headerOffset = 48;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent && scrolled < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.4}px)`;
+                heroContent.style.opacity = 1 - (scrolled / window.innerHeight);
+            }
+        });
+    </script>
 </body>
 </html>
