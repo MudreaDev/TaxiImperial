@@ -7,7 +7,8 @@
     <title>Taxi Imperial</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4af37;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23e8c968;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23grad)'/%3E%3Ctext x='50' y='70' font-family='Arial' font-size='50' font-weight='bold' fill='%23000' text-anchor='middle'%3ETI%3C/text%3E%3C/svg%3E">
+    <!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4af37;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23e8c968;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='url(%23grad)'/%3E%3Cpath d='M 30 55 L 30 35 L 50 25 L 70 35 L 70 55 M 35 50 L 35 40 L 50 33 L 65 40 L 65 50 M 25 60 L 75 60 M 30 65 L 70 65 M 35 70 L 65 70' stroke='%23000' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
     <!-- AOS Animation Library -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
@@ -88,17 +89,88 @@
         }
 
         .logo {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            color: #000;
-            font-size: 14px;
-            letter-spacing: -0.5px;
+            position: relative;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        .logo svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .logo-bg {
+            filter: drop-shadow(0 3px 10px rgba(212, 175, 55, 0.4));
+            transition: all 0.4s ease;
+        }
+
+        .logo:hover .logo-bg {
+            filter: drop-shadow(0 6px 20px rgba(212, 175, 55, 0.7));
+        }
+
+        /* Taxi animation */
+        .logo-taxi {
+            animation: taxiFloat 3s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes taxiFloat {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-1px) translateX(0.5px);
+            }
+            50% {
+                transform: translateY(-2px) translateX(0);
+            }
+            75% {
+                transform: translateY(-1px) translateX(-0.5px);
+            }
+        }
+
+        /* Window shine effect */
+        .logo-window {
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover .logo-window {
+            opacity: 0.5;
+            animation: windowShine 1s ease-in-out;
+        }
+
+        @keyframes windowShine {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Hover effect - taxi moves */
+        .logo:hover .logo-taxi {
+            animation: taxiDrive 0.6s ease-in-out;
+        }
+
+        @keyframes taxiDrive {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(3px);
+            }
         }
 
         .brand-name {
@@ -713,6 +785,10 @@
                 align-items: center;
                 gap: 12px;
             }
+            .logo {
+                width: 36px;
+                height: 36px;
+            }
 
                 .nav-container nav {
                     display: flex;
@@ -1026,7 +1102,48 @@
     <header class="header" id="header">
         <div class="nav-container">
             <a class="brand" href="#home">
-                <div class="logo">TI</div>
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#d4af37"/>
+                                <stop offset="100%" style="stop-color:#e8c968"/>
+                            </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Background circle -->
+                        <circle class="logo-bg" cx="50" cy="50" r="48" fill="url(#logoGrad)"/>
+                        
+                        <!-- Taxi body -->
+                        <g class="logo-taxi" opacity="0.9">
+                            <!-- Main body -->
+                            <rect x="25" y="35" width="50" height="28" rx="3" fill="#000"/>
+                            
+                            <!-- Windows -->
+                            <rect class="logo-window" x="30" y="40" width="18" height="15" rx="1" fill="#00bfff" opacity="0.3"/>
+                            <rect class="logo-window" x="52" y="40" width="18" height="15" rx="1" fill="#00bfff" opacity="0.3"/>
+                            
+                            <!-- Wheels -->
+                            <ellipse cx="33" cy="65" rx="6" ry="6" fill="#000"/>
+                            <ellipse cx="33" cy="65" rx="3" ry="3" fill="#555"/>
+                            <ellipse cx="67" cy="65" rx="6" ry="6" fill="#000"/>
+                            <ellipse cx="67" cy="65" rx="3" ry="3" fill="#555"/>
+                            
+                            <!-- Roof light -->
+                            <path d="M 35 35 Q 50 30 65 35" fill="none" stroke="#000" stroke-width="2"/>
+                            
+                            <!-- Door handle -->
+                            <rect x="48" y="58" width="4" height="5" rx="0.5" fill="#000"/>
+                        </g>
+                    </svg>
+                </div>
                 <span class="brand-name">Taxi Imperial</span>
             </a>
             <nav>
