@@ -556,6 +556,24 @@
             border: 1px solid rgba(255,255,255,0.06);
             transition: all 0.4s ease;
         }
+        .contact-card-link {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+            .contact-card-link:hover {
+                transform: translateY(-8px) scale(1.02);
+                border-color: rgba(212,175,55,0.5);
+            }
+
+            .contact-card-link .contact-value {
+                color: var(--gold);
+                transition: color 0.3s ease;
+            }
+
+            .contact-card-link:hover .contact-value {
+                color: var(--gold-light);
+            }
 
             .contact-card:hover {
                 transform: translateY(-8px);
@@ -997,16 +1015,16 @@
                 <div class="container">
                     <h2 class="section-title" data-aos="fade-up">Contactează-ne</h2>
                     <div class="contact-grid">
-                        <div class="contact-card" data-aos="fade-up" data-aos-delay="0">
+                        <a href="tel:+37323577777" class="contact-card contact-card-link" data-aos="fade-up" data-aos-delay="0">
                             <div class="contact-icon">📞</div>
                             <div class="contact-label">Telefon</div>
-                            <div class="contact-value"><a href="tel:+37323577777">+373 235 77777</a></div>
-                        </div>
-                        <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="contact-value">+373 235 77777</div>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61557220314543" target="_blank" class="contact-card contact-card-link" data-aos="fade-up" data-aos-delay="100">
                             <div class="contact-icon">📘</div>
                             <div class="contact-label">Facebook</div>
-                            <div class="contact-value"><a href="https://www.facebook.com/profile.php?id=61557220314543" target="_blank">Vizitează-ne</a></div>
-                        </div>
+                            <div class="contact-value">Vizitează-ne</div>
+                        </a>
                         <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
                             <div class="contact-icon">📍</div>
                             <div class="contact-label">Adresă</div>
