@@ -202,6 +202,20 @@
                 transform: translateY(4px) rotate(10deg);
             }
         }
+        .weather-icon.animate-moon {
+    animation: moonGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes moonGlow {
+            0%, 100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+            }
+            50% {
+                opacity: 0.85;
+                filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.6));
+            }
+        }
 
         .cta {
             background: var(--gold);
@@ -1084,6 +1098,7 @@
                     const data = await response.json();
                     const temp = Math.round(data.current_weather.temperature);
                     const weatherCode = data.current_weather.weathercode;
+                    const isDay = data.current_weather.is_day; // 1 = zi, 0 = noapte
                     const weatherIcon = document.getElementById('weather-icon');
 
                     // Remove all animation classes first
@@ -1091,12 +1106,21 @@
 
                     // Weather codes: https://open-meteo.com/en/docs
                     if (weatherCode === 0) {
-                        // Clear sky
-                        weatherIcon.textContent = '☀️';
-                        weatherIcon.classList.add('animate-sun');
+                        // Clear sky - soare ziua, luna noaptea
+                        if (isDay === 1) {
+                            weatherIcon.textContent = '☀️';
+                            weatherIcon.classList.add('animate-sun');
+                        } else {
+                            weatherIcon.textContent = '🌙';
+                            weatherIcon.classList.add('animate-moon');
+                        }
                     } else if (weatherCode >= 1 && weatherCode <= 3) {
                         // Partly cloudy / Cloudy
-                        weatherIcon.textContent = '☁️';
+                        if (isDay === 1) {
+                            weatherIcon.textContent = '⛅';
+                        } else {
+                            weatherIcon.textContent = '☁️';
+                        }
                         weatherIcon.classList.add('animate-cloud');
                     } else if (weatherCode >= 45 && weatherCode <= 48) {
                         // Fog
