@@ -7,11 +7,10 @@
     <title>Taxi Imperial</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4af37;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23e8c968;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23grad)'/%3E%3Ctext x='50' y='70' font-family='Arial' font-size='50' font-weight='bold' fill='%23000' text-anchor='middle'%3ETI%3C/text%3E%3C/svg%3E">
-
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cdefs%3E%3CradialGradient id='p'%3E%3Cstop offset='0%25' style='stop-color:%23e8c968'/%3E%3Cstop offset='50%25' style='stop-color:%23d4af37'/%3E%3Cstop offset='100%25' style='stop-color:%23b8954d'/%3E%3C/radialGradient%3E%3ClinearGradient id='c' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4af37'/%3E%3Cstop offset='50%25' style='stop-color:%23e8c968'/%3E%3Cstop offset='100%25' style='stop-color:%23d4af37'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='70' cy='70' r='40' fill='url(%23p)'%3E%3Canimate attributeName='r' values='40;43;40' dur='6s' repeatCount='indefinite'/%3E%3C/circle%3E%3Cg%3E%3CanimateTransform attributeName='transform' type='rotate' from='180 70 70' to='-180 70 70' dur='12s' repeatCount='indefinite'/%3E%3Ctext x='70' y='67' font-size='10' font-weight='700' text-anchor='middle' fill='%232d2416' font-family='Libre Baskerville,serif'%3ETAXI%3C/text%3E%3Ctext x='70' y='77' font-size='9' font-weight='700' text-anchor='middle' fill='%232d2416' font-family='Libre Baskerville,serif'%3EIMPERIAL%3C/text%3E%3C/g%3E%3Cg%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 70 70' to='360 70 70' dur='12s' repeatCount='indefinite'/%3E%3Cg transform='translate(70,10)'%3E%3Cellipse cx='-8' cy='5' rx='3' ry='2' fill='%23d4af37' opacity='0.4'%3E%3Canimate attributeName='opacity' values='0.4;0.1;0' dur='1s' repeatCount='indefinite'/%3E%3Canimate attributeName='rx' values='3;5;7' dur='1s' repeatCount='indefinite'/%3E%3C/ellipse%3E%3Cpath d='M -6 0 Q -5 -3 0 -3 L 6 -3 Q 10 -3 12 0 L 15 4 Q 16 6 16 8 L 14 10 L -8 10 L -10 8 Q -10 6 -8 4 Z' fill='url(%23c)' stroke='%23b8954d' stroke-width='0.8'/%3E%3Ccircle cx='-4' cy='10' r='3' fill='%231a1a1a'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%231a1a1a'/%3E%3Cellipse cx='14' cy='5' rx='1.5' ry='1' fill='%23ffe4b5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
     <!-- AOS Animation Library -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #000000;
@@ -78,7 +77,13 @@
             margin: 0 auto;
             padding: 0 24px;
         }
+        .logo {
+            position: relative;
+        }
 
+        .logo svg {
+            overflow: visible !important;
+        }
         .brand {
             display: flex;
             align-items: center;
@@ -88,17 +93,88 @@
         }
 
         .logo {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            color: #000;
-            font-size: 14px;
-            letter-spacing: -0.5px;
+            position: relative;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        .logo svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .logo-bg {
+            filter: drop-shadow(0 3px 10px rgba(212, 175, 55, 0.4));
+            transition: all 0.4s ease;
+        }
+
+        .logo:hover .logo-bg {
+            filter: drop-shadow(0 6px 20px rgba(212, 175, 55, 0.7));
+        }
+
+        /* Taxi animation */
+        .logo-taxi {
+            animation: taxiFloat 3s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes taxiFloat {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-1px) translateX(0.5px);
+            }
+            50% {
+                transform: translateY(-2px) translateX(0);
+            }
+            75% {
+                transform: translateY(-1px) translateX(-0.5px);
+            }
+        }
+
+        /* Window shine effect */
+        .logo-window {
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover .logo-window {
+            opacity: 0.5;
+            animation: windowShine 1s ease-in-out;
+        }
+
+        @keyframes windowShine {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Hover effect - taxi moves */
+        .logo:hover .logo-taxi {
+            animation: taxiDrive 0.6s ease-in-out;
+        }
+
+        @keyframes taxiDrive {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(3px);
+            }
         }
 
         .brand-name {
@@ -200,6 +276,20 @@
 
             50% {
                 transform: translateY(4px) rotate(10deg);
+            }
+        }
+        .weather-icon.animate-moon {
+    animation: moonGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes moonGlow {
+            0%, 100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+            }
+            50% {
+                opacity: 0.85;
+                filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.6));
             }
         }
 
@@ -556,6 +646,24 @@
             border: 1px solid rgba(255,255,255,0.06);
             transition: all 0.4s ease;
         }
+        .contact-card-link {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+            .contact-card-link:hover {
+                transform: translateY(-8px) scale(1.02);
+                border-color: rgba(212,175,55,0.5);
+            }
+
+            .contact-card-link .contact-value {
+                color: var(--gold);
+                transition: color 0.3s ease;
+            }
+
+            .contact-card-link:hover .contact-value {
+                color: var(--gold-light);
+            }
 
             .contact-card:hover {
                 transform: translateY(-8px);
@@ -680,6 +788,10 @@
                 grid-template-columns: auto 1fr auto;
                 align-items: center;
                 gap: 12px;
+            }
+            .logo {
+                width: 36px;
+                height: 36px;
             }
 
                 .nav-container nav {
@@ -887,13 +999,223 @@
                 font-size: 26px;
             }
         }
+        /* Floating Phone Button */
+        .phone-float {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            z-index: 999;
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
+            cursor: pointer;
+        }
+
+        .phone-float:hover {
+            transform: scale(1.1) translateY(-4px);
+            box-shadow: 0 12px 32px rgba(212, 175, 55, 0.6);
+        }
+
+        .phone-float:active {
+            transform: scale(0.95);
+        }
+
+        .phone-icon {
+            font-size: 28px;
+            animation: phoneRing 2s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes phoneRing {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            10%, 30% {
+                transform: rotate(-15deg);
+            }
+            20%, 40% {
+                transform: rotate(15deg);
+            }
+            50% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .phone-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.6;
+            animation: pulse 2s ease-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive pentru mobil */
+        @media (max-width: 768px) {
+            .phone-float {
+                width: 56px;
+                height: 56px;
+                bottom: 24px;
+                right: 24px;
+            }
+            
+            .phone-icon {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .phone-float {
+                width: 52px;
+                height: 52px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .phone-icon {
+                font-size: 22px;
+            }
+        }
     </style>
 </head>
 <body>
     <header class="header" id="header">
         <div class="nav-container">
             <a class="brand" href="#home">
-                <div class="logo">TI</div>
+                <div class="logo" id="header-logo">
+                    <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%; overflow: visible;">
+                        <defs>
+                            <radialGradient id="planetGrad" cx="30%" cy="30%">
+                                <stop offset="0%" style="stop-color:#e8c968"/>
+                                <stop offset="50%" style="stop-color:#d4af37"/>
+                                <stop offset="100%" style="stop-color:#b8954d"/>
+                            </radialGradient>
+                            <linearGradient id="carGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#d4af37"/>
+                                <stop offset="50%" style="stop-color:#e8c968"/>
+                                <stop offset="100%" style="stop-color:#d4af37"/>
+                            </linearGradient>
+                            <filter id="logoGlow">
+                                <feGaussianBlur stdDeviation="4"/>
+                            </filter>
+                            <mask id="planetMask">
+                                <circle cx="140" cy="140" r="80" fill="white"/>
+                            </mask>
+                        </defs>
+                        
+                        <!-- Outer glow layers -->
+                        <circle cx="140" cy="140" r="90" fill="url(#planetGrad)" opacity="0.18" filter="url(#logoGlow)">
+                            <animate attributeName="r" values="90;100;90" dur="4s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.18;0.3;0.18" dur="4s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="140" cy="140" r="100" fill="url(#planetGrad)" opacity="0.14" filter="url(#logoGlow)">
+                            <animate attributeName="r" values="100;110;100" dur="5s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.14;0.25;0.14" dur="5s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="140" cy="140" r="110" fill="url(#planetGrad)" opacity="0.1" filter="url(#logoGlow)">
+                            <animate attributeName="r" values="110;120;110" dur="6s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.1;0.2;0.1" dur="6s" repeatCount="indefinite"/>
+                        </circle>
+                        
+                        <!-- Central planet -->
+                        <circle cx="140" cy="140" r="80" fill="url(#planetGrad)" filter="url(#logoGlow)">
+                            <animate attributeName="r" values="80;86;80" dur="6s" repeatCount="indefinite"/>
+                        </circle>
+                        
+                        <!-- Particles from center (gold) to edge (red) -->
+                        <g mask="url(#planetMask)">
+                            <circle cx="140" cy="140" r="2" opacity="0">
+                                <animate attributeName="cx" values="140;175;140" dur="3.5s" repeatCount="indefinite"/>
+                                <animate attributeName="cy" values="140;115;140" dur="3.5s" repeatCount="indefinite"/>
+                                <animate attributeName="r" values="0.5;2.5;0.5" dur="3.5s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0;0.9;0" dur="3.5s" repeatCount="indefinite"/>
+                                <animate attributeName="fill" values="#e8c968;#e09746;#d43d2c" dur="3.5s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="140" cy="140" r="1.5" opacity="0">
+                                <animate attributeName="cx" values="140;105;140" dur="4s" repeatCount="indefinite"/>
+                                <animate attributeName="cy" values="140;165;140" dur="4s" repeatCount="indefinite"/>
+                                <animate attributeName="r" values="0.5;3;0.5" dur="4s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0;0.85;0" dur="4s" repeatCount="indefinite"/>
+                                <animate attributeName="fill" values="#e8c968;#dc794a;#d43d2c" dur="4s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="140" cy="140" r="2.5" opacity="0">
+                                <animate attributeName="cx" values="140;170;140" dur="3.8s" repeatCount="indefinite"/>
+                                <animate attributeName="cy" values="140;170;140" dur="3.8s" repeatCount="indefinite"/>
+                                <animate attributeName="r" values="0.5;3.5;0.5" dur="3.8s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0;1;0" dur="3.8s" repeatCount="indefinite"/>
+                                <animate attributeName="fill" values="#e8c968;#e4b55e;#dc5b36" dur="3.8s" repeatCount="indefinite"/>
+                            </circle>
+                        </g>
+                        
+                        <!-- Text - rotates exactly opposite (180deg offset) -->
+                        <g>
+                            <animateTransform attributeName="transform" type="rotate" from="180 140 140" to="-180 140 140" dur="12s" repeatCount="indefinite"/>
+                            <text x="140" y="136" font-size="20" font-weight="700" text-anchor="middle" fill="#2d2416" font-family="Libre Baskerville, serif" letter-spacing="1">
+                                TAXI
+                            </text>
+                            <text x="140" y="154" font-size="18" font-weight="700" text-anchor="middle" fill="#2d2416" font-family="Libre Baskerville, serif" letter-spacing="1">
+                                IMPERIAL
+                            </text>
+                        </g>
+                        
+                        <!-- Orbiting car with smoke trail -->
+                        <g>
+                            <animateTransform attributeName="transform" type="rotate" from="0 140 140" to="360 140 140" dur="12s" repeatCount="indefinite"/>
+                            <g transform="translate(140, 20)">
+                                <!-- Smoke trail -->
+                                <ellipse cx="-25" cy="7" rx="4" ry="3" fill="#d4af37" opacity="0.4">
+                                    <animate attributeName="opacity" values="0.4;0.15;0" dur="0.8s" repeatCount="indefinite"/>
+                                    <animate attributeName="rx" values="4;6;8" dur="0.8s" repeatCount="indefinite"/>
+                                    <animate attributeName="cx" values="-25;-30;-35" dur="0.8s" repeatCount="indefinite"/>
+                                </ellipse>
+                                <ellipse cx="-20" cy="7" rx="3.5" ry="2.5" fill="#d4af37" opacity="0.5">
+                                    <animate attributeName="opacity" values="0.5;0.2;0" dur="0.8s" repeatCount="indefinite" begin="0.2s"/>
+                                    <animate attributeName="rx" values="3.5;5;7" dur="0.8s" repeatCount="indefinite" begin="0.2s"/>
+                                    <animate attributeName="cx" values="-20;-25;-30" dur="0.8s" repeatCount="indefinite" begin="0.2s"/>
+                                </ellipse>
+                                <ellipse cx="-15" cy="7" rx="3" ry="2" fill="#d4af37" opacity="0.6">
+                                    <animate attributeName="opacity" values="0.6;0.25;0" dur="0.8s" repeatCount="indefinite" begin="0.4s"/>
+                                    <animate attributeName="rx" values="3;4.5;6" dur="0.8s" repeatCount="indefinite" begin="0.4s"/>
+                                    <animate attributeName="cx" values="-15;-20;-25" dur="0.8s" repeatCount="indefinite" begin="0.4s"/>
+                                </ellipse>
+                                
+                                <!-- Car -->
+                                <path d="M -20 0 Q -18 -8 -10 -9 L 6 -9 Q 16 -9 22 -6 L 32 2 Q 35 5 35 9 L 33 13 Q 32 15 28 15 L -22 15 Q -25 15 -25 12 Z" 
+                                      fill="url(#carGrad)" stroke="#b8954d" stroke-width="1"/>
+                                <path d="M -9 -9 L -5 -13 L 9 -13 L 13 -9 Z" fill="#1a1a2e" opacity="0.95"/>
+                                <circle cx="-13" cy="15" r="5" fill="#1a1a1a"/>
+                                <circle cx="21" cy="15" r="5" fill="#1a1a1a"/>
+                                <ellipse cx="32" cy="7" rx="2.5" ry="2" fill="#ffe4b5">
+                                    <animate attributeName="opacity" values="0.95;0.6;0.95" dur="2s" repeatCount="indefinite"/>
+                                </ellipse>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
                 <span class="brand-name">Taxi Imperial</span>
             </a>
             <nav>
@@ -997,16 +1319,16 @@
                 <div class="container">
                     <h2 class="section-title" data-aos="fade-up">Contactează-ne</h2>
                     <div class="contact-grid">
-                        <div class="contact-card" data-aos="fade-up" data-aos-delay="0">
+                        <a href="tel:+37323577777" class="contact-card contact-card-link" data-aos="fade-up" data-aos-delay="0">
                             <div class="contact-icon">📞</div>
                             <div class="contact-label">Telefon</div>
-                            <div class="contact-value"><a href="tel:+37323577777">+373 235 77777</a></div>
-                        </div>
-                        <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="contact-value">+373 235 77777</div>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61557220314543" target="_blank" class="contact-card contact-card-link" data-aos="fade-up" data-aos-delay="100">
                             <div class="contact-icon">📘</div>
                             <div class="contact-label">Facebook</div>
-                            <div class="contact-value"><a href="https://www.facebook.com/profile.php?id=61557220314543" target="_blank">Vizitează-ne</a></div>
-                        </div>
+                            <div class="contact-value">Vizitează-ne</div>
+                        </a>
                         <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
                             <div class="contact-icon">📍</div>
                             <div class="contact-label">Adresă</div>
@@ -1066,6 +1388,7 @@
                     const data = await response.json();
                     const temp = Math.round(data.current_weather.temperature);
                     const weatherCode = data.current_weather.weathercode;
+                    const isDay = data.current_weather.is_day; // 1 = zi, 0 = noapte
                     const weatherIcon = document.getElementById('weather-icon');
 
                     // Remove all animation classes first
@@ -1073,12 +1396,21 @@
 
                     // Weather codes: https://open-meteo.com/en/docs
                     if (weatherCode === 0) {
-                        // Clear sky
-                        weatherIcon.textContent = '☀️';
-                        weatherIcon.classList.add('animate-sun');
+                        // Clear sky - soare ziua, luna noaptea
+                        if (isDay === 1) {
+                            weatherIcon.textContent = '☀️';
+                            weatherIcon.classList.add('animate-sun');
+                        } else {
+                            weatherIcon.textContent = '🌙';
+                            weatherIcon.classList.add('animate-moon');
+                        }
                     } else if (weatherCode >= 1 && weatherCode <= 3) {
-                        // Partly cloudy / Cloudy
-                        weatherIcon.textContent = '☁️';
+                        // Paartly cloudy / Cloudy
+                        if (isDay === 1) {
+                            weatherIcon.textContent = '⛅';
+                        } else {
+                            weatherIcon.textContent = '☁️';
+                        }
                         weatherIcon.classList.add('animate-cloud');
                     } else if (weatherCode >= 45 && weatherCode <= 48) {
                         // Fog
@@ -1155,5 +1487,9 @@
                 }
             });
         </script>
+        <a href="tel:+37323577777" class="phone-float" aria-label="Sună acum">
+            <span class="phone-icon">📞</span>
+            <span class="phone-pulse"></span>
+        </a>
     </body>
     </html>
