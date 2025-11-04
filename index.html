@@ -419,6 +419,16 @@
             will-change: transform;
             transform: translateZ(0);
         }
+        /* Hyperdrive Stars Canvas */
+        #hyperdrive-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
 
         .particle {
             position: absolute;
@@ -1152,112 +1162,115 @@
     </style>
 </head>
 <body>
+    <canvas id="hyperdrive-stars"></canvas>
+
     <header class="header" id="header">
-        <div class="nav-container">
-            <a class="brand" href="#home">
-                <div class="logo" id="header-logo">
-                    <img src="assets/logo.svg" alt="Taxi Imperial Logo" style="width: 100%; height: 100%;">
+       
+            <div class="nav-container">
+                <a class="brand" href="#home">
+                    <div class="logo" id="header-logo">
+                        <img src="assets/logo.svg" alt="Taxi Imperial Logo" style="width: 100%; height: 100%;">
+                    </div>
+                    <span class="brand-name">Taxi Imperial</span>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Acasă</a></li>
+                        <li><a href="#services">Servicii</a></li>
+                        <li><a href="#about">Despre</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li>
+                            <div class="weather-widget" id="weather">
+                                <span class="weather-icon" id="weather-icon">⏳</span>
+                                <span id="temp">...</span>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <a class="cta" href="tel:+37323577777">Comandă acum</a>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section id="home" class="hero">
+                <div class="hero-bg"></div>
+                <div class="hero-particles" id="particles"></div>
+                <div class="hero-content">
+                    <h1 class="hero-title" data-aos="fade-up" data-aos-duration="1000">
+                        Călătoria ta, prioritatea noastră!
+                    </h1>
+                    <p class="hero-subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                        Taxi Imperial — De la primele curse până azi, noi scriem experiența transportului din Orhei.
+                    </p>
+                    <div class="hero-actions" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                        <a href="tel:+37323577777" class="cta cta-primary">Comandă acum</a>
+                        <a href="#services" class="cta cta-secondary">Vezi servicii</a>
+                    </div>
                 </div>
-                <span class="brand-name">Taxi Imperial</span>
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="#home">Acasă</a></li>
-                    <li><a href="#services">Servicii</a></li>
-                    <li><a href="#about">Despre</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li>
-                        <div class="weather-widget" id="weather">
-                            <span class="weather-icon" id="weather-icon">⏳</span>
-                            <span id="temp">...</span>
+                <div class="scroll-indicator"><span></span></div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">De ce Taxi Imperial?</h2>
+                    <div class="features-grid">
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                            <span class="feature-icon">⚡</span>
+                            <h3 class="feature-title">Rapiditate</h3>
+                            <p class="feature-description">Ajungem în 5 minute. Comandă acum și ne vedem imediat.</p>
                         </div>
-                    </li>
-                </ul>
-            </nav>
-            <a class="cta" href="tel:+37323577777">Comandă acum</a>
-        </div>
-    </header>
-
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div class="hero-bg"></div>
-            <div class="hero-particles" id="particles"></div>
-            <div class="hero-content">
-                <h1 class="hero-title" data-aos="fade-up" data-aos-duration="1000">
-                    Călătoria ta, prioritatea noastră!
-                </h1>
-                <p class="hero-subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                    Taxi Imperial — De la primele curse până azi, noi scriem experiența transportului din Orhei.
-                </p>
-                <div class="hero-actions" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-                    <a href="tel:+37323577777" class="cta cta-primary">Comandă acum</a>
-                    <a href="#services" class="cta cta-secondary">Vezi servicii</a>
-                </div>
-            </div>
-            <div class="scroll-indicator"><span></span></div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="features-section">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">De ce Taxi Imperial?</h2>
-                <div class="features-grid">
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
-                        <span class="feature-icon">⚡</span>
-                        <h3 class="feature-title">Rapiditate</h3>
-                        <p class="feature-description">Ajungem în 5 minute. Comandă acum și ne vedem imediat.</p>
-                    </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                        <span class="feature-icon">🛡️</span>
-                        <h3 class="feature-title">Siguranță</h3>
-                        <p class="feature-description">Șoferi verificați, mașini în condiție perfectă, traseu sigur.</p>
-                    </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                        <span class="feature-icon">🤝</span>
-                        <h3 class="feature-title">Profesionalism</h3>
-                        <p class="feature-description">Echipă dedicată, disponibilă 24/7 pentru confortul tău.</p>
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                            <span class="feature-icon">🛡️</span>
+                            <h3 class="feature-title">Siguranță</h3>
+                            <p class="feature-description">Șoferi verificați, mașini în condiție perfectă, traseu sigur.</p>
+                        </div>
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                            <span class="feature-icon">🤝</span>
+                            <h3 class="feature-title">Profesionalism</h3>
+                            <p class="feature-description">Echipă dedicată, disponibilă 24/7 pentru confortul tău.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Services Section -->
-        <section id="services" class="services-section">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Serviciile noastre</h2>
-                <div class="services-grid">
-                    <div class="service-card" data-aos="zoom-in" data-aos-delay="0">
-                        <span class="service-emoji">🚕</span>
-                        <h3 class="service-name">Cursă locală</h3>
-                        <p class="service-description">Deplasări rapide în Orhei și împrejurimi. Preț fix, fără surprize.</p>
-                    </div>
-                    <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
-                        <span class="service-emoji">✈️</span>
-                        <h3 class="service-name">Transfer aeroport</h3>
-                        <p class="service-description">Transport confortabil spre și de la aeroport. Punctualitate garantată.</p>
-                    </div>
-                    <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
-                        <span class="service-emoji">🎉</span>
-                        <h3 class="service-name">Evenimente speciale</h3>
-                        <p class="service-description">Transport organizat în prealabil pentru nunți, evenimente corporative și orice sărbătoare.</p>
+            <!-- Services Section -->
+            <section id="services" class="services-section">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">Serviciile noastre</h2>
+                    <div class="services-grid">
+                        <div class="service-card" data-aos="zoom-in" data-aos-delay="0">
+                            <span class="service-emoji">🚕</span>
+                            <h3 class="service-name">Cursă locală</h3>
+                            <p class="service-description">Deplasări rapide în Orhei și împrejurimi. Preț fix, fără surprize.</p>
+                        </div>
+                        <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
+                            <span class="service-emoji">✈️</span>
+                            <h3 class="service-name">Transfer aeroport</h3>
+                            <p class="service-description">Transport confortabil spre și de la aeroport. Punctualitate garantată.</p>
+                        </div>
+                        <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+                            <span class="service-emoji">🎉</span>
+                            <h3 class="service-name">Evenimente speciale</h3>
+                            <p class="service-description">Transport organizat în prealabil pentru nunți, evenimente corporative și orice sărbătoare.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- About Section -->
-        <section id="about" class="about-section">
-            <div class="container">
-                <div class="about-content" data-aos="fade-up">
-                    <h2>Despre noi</h2>
-                    <p>Taxi Imperial înseamnă mai mult decât o simplă cursă — este alegerea celor care vor siguranță, punctualitate și confort la fiecare deplasare. Suntem disponibili non‑stop și gata să transformăm fiecare drum într-o experiență plăcută și fără griji. Alege calitatea, alege Taxi Imperial.</p>
+            <!-- About Section -->
+            <section id="about" class="about-section">
+                <div class="container">
+                    <div class="about-content" data-aos="fade-up">
+                        <h2>Despre noi</h2>
+                        <p>Taxi Imperial înseamnă mai mult decât o simplă cursă — este alegerea celor care vor siguranță, punctualitate și confort la fiecare deplasare. Suntem disponibili non‑stop și gata să transformăm fiecare drum într-o experiență plăcută și fără griji. Alege calitatea, alege Taxi Imperial.</p>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Contact Section -->
-    <section id="contact" class="contact-section">
+            <!-- Contact Section -->
+            <section id="contact" class="contact-section">
                 <div class="container">
                     <h2 class="section-title" data-aos="fade-up">Contactează-ne</h2>
                     <div class="contact-grid">
@@ -1478,10 +1491,172 @@
                     });
                 }
             }, { passive: true });
+            // ========== HYPERDRIVE STAR FIELD ==========
+            (function () {
+                const canvas = document.getElementById('hyperdrive-stars');
+                const ctx = canvas.getContext('2d', { alpha: true });
+
+                let stars = [];
+                let animationId;
+                let isVisible = true;
+
+                // Detectare dispozitiv
+                const isMobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                const STAR_COUNT = isMobile ? 150 : 300;
+                const SPEED_MULTIPLIER = isMobile ? 0.8 : 1;
+
+                // Setare dimensiuni canvas
+                function resizeCanvas() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    initStars();
+                }
+
+                // Star class
+                class Star {
+                    constructor() {
+                        this.reset();
+                    }
+
+                    reset() {
+                        // Pornesc din centru și se deplasează spre margini
+                        this.x = canvas.width / 2;
+                        this.y = canvas.height / 2;
+
+                        // Unghi aleator pentru direcție
+                        const angle = Math.random() * Math.PI * 2;
+                        const distance = Math.random() * Math.min(canvas.width, canvas.height) / 2;
+
+                        this.targetX = this.x + Math.cos(angle) * distance;
+                        this.targetY = this.y + Math.sin(angle) * distance;
+
+                        // Viteză aleatoare
+                        this.speed = (2 + Math.random() * 6) * SPEED_MULTIPLIER;
+
+                        // Dimensiune aleatoare
+                        this.size = Math.random() * 2;
+
+                        // Opacitate
+                        this.opacity = 0;
+                        this.fadeIn = true;
+
+                        // Trail length
+                        this.trailLength = 20 + Math.random() * 40;
+                    }
+
+                    update() {
+                        // Calculare direcție
+                        const dx = this.targetX - this.x;
+                        const dy = this.targetY - this.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < 2) {
+                            this.reset();
+                            return;
+                        }
+
+                        // Mișcare
+                        this.x += (dx / distance) * this.speed;
+                        this.y += (dy / distance) * this.speed;
+
+                        // Accelerare pe măsură ce se îndepărtează de centru
+                        this.speed *= 1.01;
+
+                        // Fade in/out
+                        if (this.fadeIn) {
+                            this.opacity = Math.min(1, this.opacity + 0.05);
+                            if (this.opacity >= 1) this.fadeIn = false;
+                        }
+
+                        // Reset dacă iese din ecran
+                        if (this.x < -50 || this.x > canvas.width + 50 ||
+                            this.y < -50 || this.y > canvas.height + 50) {
+                            this.reset();
+                        }
+                    }
+
+                    draw() {
+                        // Calculare poziție anterioară pentru trail
+                        const centerX = canvas.width / 2;
+                        const centerY = canvas.height / 2;
+                        const dx = this.x - centerX;
+                        const dy = this.y - centerY;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < 10) return;
+
+                        const trailRatio = Math.min(this.trailLength / distance, 0.8);
+                        const prevX = centerX + dx * (1 - trailRatio);
+                        const prevY = centerY + dy * (1 - trailRatio);
+
+                        // Desenare trail (motion blur)
+                        const gradient = ctx.createLinearGradient(prevX, prevY, this.x, this.y);
+                        gradient.addColorStop(0, `rgba(255, 255, 255, 0)`);
+                        gradient.addColorStop(1, `rgba(255, 255, 255, ${this.opacity})`);
+
+                        ctx.strokeStyle = gradient;
+                        ctx.lineWidth = this.size;
+                        ctx.lineCap = 'round';
+
+                        ctx.beginPath();
+                        ctx.moveTo(prevX, prevY);
+                        ctx.lineTo(this.x, this.y);
+                        ctx.stroke();
+
+                        // Desenare stea (punct luminos)
+                        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                // Inițializare stele
+                function initStars() {
+                    stars = [];
+                    for (let i = 0; i < STAR_COUNT; i++) {
+                        stars.push(new Star());
+                    }
+                }
+
+                // Animație principală
+                function animate() {
+                    if (!isVisible) return;
+
+                    // Clear cu fade pentru motion blur suplimentar
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    // Update și draw pentru fiecare stea
+                    stars.forEach(star => {
+                        star.update();
+                        star.draw();
+                    });
+
+                    animationId = requestAnimationFrame(animate);
+                }
+
+                // Gestionare vizibilitate pagină (oprește când tab-ul nu e activ)
+                document.addEventListener('visibilitychange', () => {
+                    isVisible = !document.hidden;
+                    if (isVisible) {
+                        animate();
+                    } else {
+                        cancelAnimationFrame(animationId);
+                    }
+                });
+
+                // Event listeners
+                window.addEventListener('resize', resizeCanvas, { passive: true });
+
+                // Start
+                resizeCanvas();
+                animate();
+            })();
         </script>
         <a href="tel:+37323577777" class="phone-float" aria-label="Sună acum">
             <span class="phone-icon">📞</span>
             <span class="phone-pulse"></span>
         </a>
-    </body>
+</body>
     </html>
