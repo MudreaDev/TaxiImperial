@@ -91,11 +91,20 @@
             padding: 0;
             z-index: 1000;
             transition: background 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
-            border-bottom: 0.5px solid rgba(255,255,255,0.08);
         }
 
             .header.scrolled {
                 background: rgba(0,0,0,0.85);
+            }
+            .header::after {
+                content: '';
+                position: absolute;
+                bottom: -20px;
+                left: 0;
+                right: 0;
+                height: 20px;
+                background: linear-gradient(180deg, rgba(0,0,0,0.72) 0%, transparent 100%);
+                pointer-events: none;
             }
 
         .nav-container {
@@ -1395,11 +1404,11 @@
             const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
             let particleCount;
             if (isMobile && isSmallScreen) {
-                particleCount = 600; // era 400
+                particleCount = 800; // era 600
             } else if (isTablet) {
-                particleCount = 1200; // era 800
+                particleCount = 1600; // era 1200
             } else {
-                particleCount = 1800; // era 1200
+                particleCount = 2400; // era 1800
             }
 
             // Creează particolele în batch pentru performanță mai bună
