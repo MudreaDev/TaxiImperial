@@ -428,6 +428,7 @@
             opacity: 0;
             animation: float 20s infinite ease-in-out;
             will-change: transform, opacity;
+            pointer-events: none;
         }
 
         @keyframes float {
@@ -1388,9 +1389,17 @@
             // Create floating particles - optimized for all devices
             const particlesContainer = document.getElementById("particles");
             // Detectează performanța dispozitivului
-            const isLowEnd = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ||
-                window.innerWidth < 768;
-            const particleCount = isLowEnd ? 300 : 800;
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+            const isSmallScreen = window.innerWidth < 768;
+            const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+            let particleCount;
+            if (isMobile && isSmallScreen) {
+                particleCount = 400;
+            } else if (isTablet) {
+                particleCount = 800;
+            } else {
+                particleCount = 1200;
+            }
 
             // Creează particolele în batch pentru performanță mai bună
             const fragment = document.createDocumentFragment();
