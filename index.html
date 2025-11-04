@@ -1394,11 +1394,11 @@
             const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
             let particleCount;
             if (isMobile && isSmallScreen) {
-                particleCount = 400;
+                particleCount = 600; // era 400
             } else if (isTablet) {
-                particleCount = 800;
+                particleCount = 1200; // era 800
             } else {
-                particleCount = 1200;
+                particleCount = 1800; // era 1200
             }
 
             // Creează particolele în batch pentru performanță mai bună
@@ -1409,9 +1409,15 @@
                 particle.style.left = Math.random() * 100 + "%";
                 particle.style.animationDelay = (Math.random() * 25) + "s";
                 particle.style.animationDuration = (18 + Math.random() * 12) + "s";
-                const size = 1 + Math.random() * 2;
+                const size = 1.5 + Math.random() * 3;
+
                 particle.style.width = size + "px";
                 particle.style.height = size + "px";
+                if (Math.random() > 0.9) {
+                    particle.style.width = "4px";
+                    particle.style.height = "4px";
+                    particle.style.opacity = "0.8";
+                }
                 fragment.appendChild(particle);
             }
             particlesContainer.appendChild(fragment);
