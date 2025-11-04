@@ -510,6 +510,17 @@
             background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
             position: relative;
         }
+            .features-section::before {
+                content: '';
+                position: absolute;
+                top: -100px;
+                left: 0;
+                right: 0;
+                height: 100px;
+                background: linear-gradient(180deg, transparent 0%, #000 100%);
+                pointer-events: none;
+                z-index: 1;
+            }
 
         .section-title {
             font-size: clamp(40px, 6vw, 64px);
