@@ -1389,9 +1389,15 @@
             getWeather();
             setInterval(getWeather, 60000); // Update every 10 minutes
             // Create floating particles
+            // Create floating particles - optimized for all devices
             const particlesContainer = document.getElementById("particles");
-            const particleCount = 400;
+            // Detectează performanța dispozitivului
+            const isLowEnd = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ||
+                window.innerWidth < 768;
+            const particleCount = isLowEnd ? 300 : 800;
 
+            // Creează particolele în batch pentru performanță mai bună
+            const fragment = document.createDocumentFragment();
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement("div");
                 particle.className = "particle";
@@ -1401,8 +1407,9 @@
                 const size = 1 + Math.random() * 2;
                 particle.style.width = size + "px";
                 particle.style.height = size + "px";
-                particlesContainer.appendChild(particle);
+                fragment.appendChild(particle);
             }
+            particlesContainer.appendChild(fragment);
 
             // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
