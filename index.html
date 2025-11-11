@@ -267,11 +267,13 @@
             min-width: 100px;
         }
 
+        /* Weather icon animations - IMPROVED & SMOOTH */
         .weather-icon {
             width: 24px;
             height: 24px;
             display: inline-block;
             line-height: 1;
+            transition: transform 0.3s ease;
         }
 
         /* Responsive weather icon */
@@ -282,6 +284,11 @@
             }
         }
 
+        /* Sun animation - rotating glow */
+        .weather-icon.animate-sun {
+            animation: rotateSun 20s linear infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+        }
 
         @keyframes rotateSun {
             from {
@@ -293,6 +300,7 @@
             }
         }
 
+        /* Rain animation - falling drops */
         .weather-icon.animate-rain {
             animation: rainDrop 1.5s ease-in-out infinite;
         }
@@ -307,6 +315,7 @@
             }
         }
 
+        /* Cloud animation - floating */
         .weather-icon.animate-cloud {
             animation: cloudFloat 4s ease-in-out infinite;
         }
@@ -321,6 +330,7 @@
             }
         }
 
+        /* Snow animation - falling and rotating */
         .weather-icon.animate-snow {
             animation: snowFall 2s ease-in-out infinite;
         }
@@ -335,6 +345,7 @@
             }
         }
 
+        /* Moon animation - gentle glow pulse */
         .weather-icon.animate-moon {
             animation: moonGlow 3s ease-in-out infinite;
         }
@@ -342,12 +353,67 @@
         @keyframes moonGlow {
             0%, 100% {
                 opacity: 1;
-                filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+                filter: drop-shadow(0 0 8px rgba(200, 200, 255, 0.5));
             }
 
             50% {
                 opacity: 0.85;
-                filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.6));
+                filter: drop-shadow(0 0 12px rgba(200, 200, 255, 0.7));
+            }
+        }
+
+        /* Storm animation - shaking */
+        .weather-icon.animate-storm {
+            animation: stormShake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes stormShake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-2px);
+            }
+
+            75% {
+                transform: translateX(2px);
+            }
+        }
+
+        /* Wind animation - swaying */
+        .weather-icon.animate-wind {
+            animation: windSway 2s ease-in-out infinite;
+        }
+
+        @keyframes windSway {
+            0%, 100% {
+                transform: translateX(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateX(-3px) rotate(-5deg);
+            }
+
+            75% {
+                transform: translateX(3px) rotate(5deg);
+            }
+        }
+
+        /* Mist animation - fading in and out */
+        .weather-icon.animate-mist {
+            animation: mistFade 3s ease-in-out infinite;
+        }
+
+        @keyframes mistFade {
+            0%, 100% {
+                opacity: 0.7;
+                filter: blur(0.5px);
+            }
+
+            50% {
+                opacity: 1;
+                filter: blur(0px);
             }
         }
 
@@ -1368,53 +1434,114 @@
                 const data = await response.json();
                 const temp = Math.round(data.current_weather.temperature);
                 const weatherCode = data.current_weather.weathercode;
+                const windSpeed = data.current_weather.windspeed;
                 const isDay = data.current_weather.is_day;
                 const weatherIcon = document.getElementById('weather-icon');
 
                 // Destroy previous animation if exists
                 if (weatherAnimation) {
                     weatherAnimation.destroy();
+                    weatherAnimation = null;
                 }
 
                 // Clear the container
                 weatherIcon.innerHTML = '';
+                weatherIcon.className = 'weather-icon'; // Reset classes
 
-                // Determine which animation to load
                 let animationPath = '';
+                let animationClass = '';
+
+                // PRIORITATE: Mapare corectă la realitate cu animații existente
 
                 if (weatherCode === 0) {
-                    // Clear sky
-                    animationPath = isDay === 1
-                        ? 'assets/weather/Weather-sunny.json'
-                        : 'assets/weather/Weather-night.json';
-                } else if (weatherCode >= 1 && weatherCode <= 3) {
-                    // Partly cloudy
+                    // Senin - CRUCIAL: Diferențiere ZI vs NOAPTE
+                    if (isDay === 1) {
+                        animationPath = 'assets/weather/Weather-sunny.json';
+                        animationClass = 'animate-sun';
+                    } else {
+                        animationPath = 'assets/weather/Weather-night.json';
+                        animationClass = 'animate-moon';
+                    }
+                }
+                else if (weatherCode >= 1 && weatherCode <= 2) {
+                    // Nori risipiți / Parțial înnorat
                     animationPath = 'assets/weather/Weather-partly cloudy.json';
-                } else if (weatherCode >= 45 && weatherCode <= 48) {
-                    // Fog/Mist
+                    animationClass = 'animate-cloud';
+                }
+                else if (weatherCode === 3) {
+                    // Cer acoperit / Înnorat
+                    animationPath = 'assets/weather/Weather-partly cloudy.json';
+                    animationClass = 'animate-cloud';
+                }
+                else if (weatherCode >= 45 && weatherCode <= 48) {
+                    // Brumă / Ceață
                     animationPath = 'assets/weather/Weather-mist.json';
-                } else if ((weatherCode >= 51 && weatherCode <= 67) || (weatherCode >= 80 && weatherCode <= 82)) {
-                    // Rain
+                    animationClass = 'animate-mist';
+                }
+                else if (weatherCode >= 51 && weatherCode <= 57) {
+                    // Burniță / Burniță înghețată
                     animationPath = 'assets/weather/cloudyRain.json';
-                } else if ((weatherCode >= 71 && weatherCode <= 77) || (weatherCode >= 85 && weatherCode <= 86)) {
-                    // Snow
+                    animationClass = 'animate-rain';
+                }
+                else if (weatherCode >= 61 && weatherCode <= 67) {
+                    // Ploaie (ușoară, moderată, torențială, înghețată)
+                    animationPath = 'assets/weather/cloudyRain.json';
+                    animationClass = 'animate-rain';
+                }
+                else if (weatherCode >= 71 && weatherCode <= 77) {
+                    // Ninsoare / Fulgi de zăpadă
                     animationPath = 'assets/weather/Weather-snowy.json';
-                } else if (weatherCode >= 95) {
-                    // Thunderstorm
+                    animationClass = 'animate-snow';
+                }
+                else if (weatherCode >= 80 && weatherCode <= 82) {
+                    // Aversă (ușoară, moderată, violentă)
+                    animationPath = 'assets/weather/cloudyRain.json';
+                    animationClass = 'animate-rain';
+                }
+                else if (weatherCode >= 85 && weatherCode <= 86) {
+                    // Viscol / Aversă de zăpadă
+                    animationPath = 'assets/weather/Weather-snowy.json';
+                    animationClass = 'animate-snow';
+                }
+                else if (weatherCode >= 95 && weatherCode <= 99) {
+                    // Furtună / Descărcări electrice / Grindină
                     animationPath = 'assets/weather/Weather-storm.json';
-                } else {
-                    // Default - windy or partly cloudy
+                    animationClass = 'animate-storm';
+                }
+                else if (windSpeed > 30) {
+                    // Vânt puternic
                     animationPath = 'assets/weather/Weather-windy.json';
+                    animationClass = 'animate-wind';
+                }
+                else {
+                    // Fallback - verifică dacă e zi sau noapte
+                    if (isDay === 1) {
+                        animationPath = 'assets/weather/Weather-partly cloudy.json';
+                        animationClass = 'animate-cloud';
+                    } else {
+                        animationPath = 'assets/weather/Weather-night.json';
+                        animationClass = 'animate-moon';
+                    }
                 }
 
-                // Load Lottie animation
+                // Load Lottie animation cu setări optimizate
                 weatherAnimation = lottie.loadAnimation({
                     container: weatherIcon,
                     renderer: 'svg',
                     loop: true,
                     autoplay: true,
-                    path: animationPath
+                    path: animationPath,
+                    rendererSettings: {
+                        preserveAspectRatio: 'xMidYMid meet',
+                        clearCanvas: true,
+                        progressiveLoad: true,
+                        hideOnTransparent: true,
+                        className: 'lottie-svg'
+                    }
                 });
+
+                // Add CSS animation class
+                weatherIcon.classList.add(animationClass);
 
                 document.getElementById('temp').textContent = `${temp}°C`;
 
@@ -1422,6 +1549,7 @@
                 console.error('Eroare la încărcarea meteo:', error);
                 const weatherIcon = document.getElementById('weather-icon');
                 weatherIcon.innerHTML = '🌡️';
+                weatherIcon.className = 'weather-icon';
                 document.getElementById('temp').textContent = 'Orhei';
             }
         }
